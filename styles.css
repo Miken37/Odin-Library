@@ -6,7 +6,7 @@ body{
     background-color: var(--bg);
 }
 
-.display{
+.add-book{
     outline: none;
     width: 270px;
     height: 70px;
@@ -19,14 +19,14 @@ body{
     margin: 50px;
 }
 
-.display:hover{
+.add-book:hover{
     color: rgb(153, 255, 0);
     border: 5px solid rgb(153, 255, 0);
     background-color: rgb(26, 26, 26);
     transform: scale(1.1, 1.1);
 }
 
-.display:active{
+.add-book:active{
     transform: translate(5px, 5px);
 }
 
@@ -47,8 +47,9 @@ body{
     border-radius: 10px;
     max-width: 300px;
     min-width: 100px;
-    height: 250px;
-    padding: 20px;
+    height: 350px;
+    padding-left: 20px;
+    padding-right: 20px;
     box-shadow: 5px 5px rgb(65, 65, 65);
 }
 
@@ -58,4 +59,39 @@ body{
 
 .card > p{
     font-size: 20px;
+}
+
+.top-bar{
+    display: flex;
+}
+
+form {
+    background-color: burlywood;
+    display: none;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 300px;
+}
+
+form > div{
+    margin: 5px;
+}
+
+
+
+.submit-btn {
+    outline: none;
+    background-color: crimson;
+    color: white;
+    border: 5px black solid;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 10px;
+    align-self: center;
+}
+
+.submit-btn:hover{
+    transform: scale(1.1, 1.1);
 }

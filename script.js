@@ -5,20 +5,13 @@ function log(words){
 let myLibrary = [];
 
 
-function addBookToLibrary(){ //RE WRITE THIS AS A FORM
-    /*let bookTitle = prompt("Enter book title: ");
-    let bookAuthor = prompt("Enter book author: ");
-    let bookPageCount = prompt("Enter book page count: ");
-    let bookReadStatus = prompt("Did you read it? y/n: ");*/
-    /*const book = new Book(bookTitle, bookAuthor, bookPageCount, bookReadStatus);
-    myLibrary.push(book);*/
-    log(myLibrary);
-    const form = document.querySelector(".formContainer");
+function addBookToLibrary(){ 
+    const form = document.querySelector(".form");
     form.style.display = "none";
     if (form.style.display === "none"){
-        form.style.display = "flex";
+        form.style.display = "inline-block";
     } else {
-        form.style.display = "none";
+        form.style.display = "none"; //Must switch back to none after form submition
     }
 }
 
@@ -57,6 +50,13 @@ function bookCard(){
     cardReadElement.classList.add('card-read');
     cardElement.appendChild(cardReadElement);
     cardReadElement.innerText = "Read: " + myLibrary[myLibrary.length-1].readStatus;
+
+    const deleteElement = document.createElement("div");
+    deleteElement.classList.add('del-button')
+    cardElement.appendChild(deleteElement);
+    deleteElement.addEventListener("click" , () => {
+        log("delete me bb");
+    })
 }
 
 /*Old bookCard function with forEach loop
@@ -70,9 +70,20 @@ function bookCard(){
 }
 */
 
-
 const addBookButton = document.querySelector(".add-book");
 addBookButton.addEventListener("click", () => {
     addBookToLibrary();
+})
+
+const formSubmit = document.querySelector(".form");
+formSubmit.addEventListener('submit', (e) =>{
+    e.preventDefault();
+    const titleData = formSubmit.elements['title'].value;
+    const authorData = formSubmit.elements['author'].value;
+    const pagesData = formSubmit.elements['pages'].value;
+    const readData = formSubmit.elements['read-status'].checked;
+    const book = new Book(titleData, authorData, pagesData, readData); 
+    myLibrary.push(book);  
+    log(myLibrary);
     bookCard();
 })

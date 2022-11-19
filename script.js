@@ -15,6 +15,7 @@ function addBookToLibrary(){
     }
 }
 
+
 function Book(title, author, pages, readStatus){
     this.title = title,
     this.author = author,
@@ -24,7 +25,7 @@ function Book(title, author, pages, readStatus){
 
 const cardContainer = document.querySelector(".card-container");
 const card = document.querySelector(".card");
-
+let idNum = 0;
 
 function bookCard(){
     const cardElement = document.createElement("div")
@@ -51,24 +52,19 @@ function bookCard(){
     cardElement.appendChild(cardReadElement);
     cardReadElement.innerText = "Read: " + myLibrary[myLibrary.length-1].readStatus;
 
+    let cardId = idNum;
     const deleteElement = document.createElement("div");
     deleteElement.classList.add('del-button')
+    deleteElement.setAttribute(`id`, `Card${cardId}`)
+    idNum +=1;
     cardElement.appendChild(deleteElement);
     deleteElement.addEventListener("click" , () => {
-        log("delete me bb");
+        myLibrary.splice(cardId, 1);
+        deleteElement.parentElement.remove();
     })
+    
 }
 
-/*Old bookCard function with forEach loop
-function bookCard(){
-    myLibrary.forEach(book => {
-        const test = document.createElement("div")
-        myLibrary.pop();        //Removes item from array so it is able to add only ONE item at a time instead of the entire array. 
-        test.classList.add('card');
-        cardContainer.appendChild(test);
-    });
-}
-*/
 
 const addBookButton = document.querySelector(".add-book");
 addBookButton.addEventListener("click", () => {
@@ -87,3 +83,4 @@ formSubmit.addEventListener('submit', (e) =>{
     log(myLibrary);
     bookCard();
 })
+

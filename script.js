@@ -1,30 +1,38 @@
 function log(words){
-    console.log(words)
+    console.log(words)          //Log Function
 }
 
-let myLibrary = [];
+let myLibrary = [];             //Empty Array to contain book objects
 
 
-function addBookToLibrary(){ 
+function addBookToLibrary(){        //Reveals form to input book
     const form = document.querySelector(".form");
     form.style.display = "none";
     if (form.style.display === "none"){
         form.style.display = "inline-block";
     } else {
-        form.style.display = "none"; //Must switch back to none after form submition
+        form.style.display = "none"; 
     }
 }
 
 
-function Book(title, author, pages, readStatus){
+function Book(title, author, pages, readStatus){        //Constructor for book
     this.title = title,
     this.author = author,
     this.pages = pages,
     this.readStatus = readStatus
 }
 
-const cardContainer = document.querySelector(".card-container");
-const card = document.querySelector(".card");
+Book.prototype.toggleRead = function(){                 //Attempt to use prototype to toggleRead. Able to receive log result
+    if (this.readStatus == true){                       //Struggling to change DOM for elements in other function
+        log("read");
+    } else{
+        log("not read");
+    }
+}
+
+const cardContainer = document.querySelector(".card-container");    //Queries the div that contains all the cards
+const card = document.querySelector(".card");                       
 let idNum = 0;
 
 function bookCard(){
@@ -32,38 +40,66 @@ function bookCard(){
     cardElement.classList.add('card');
     cardContainer.appendChild(cardElement);
 
+    const cardInnerContainer = document.createElement("div")
+    cardInnerContainer.classList.add('card-inner-one');
+    cardElement.appendChild(cardInnerContainer);
+
     const cardTitleElement = document.createElement("h1");
     cardTitleElement.classList.add('card-title');
-    cardElement.appendChild(cardTitleElement);
+    cardInnerContainer.appendChild(cardTitleElement);
     cardTitleElement.innerText = myLibrary[myLibrary.length-1].title;       //Referencing index: OF LENGTH -1
 
     const cardAuthorElement = document.createElement("p");
     cardAuthorElement.classList.add('card-author');
-    cardElement.appendChild(cardAuthorElement);
+    cardInnerContainer.appendChild(cardAuthorElement);
     cardAuthorElement.innerText = "Written by: " + myLibrary[myLibrary.length-1].author;
 
     const cardPagesElement = document.createElement("p");
     cardPagesElement.classList.add('card-pages');
-    cardElement.appendChild(cardPagesElement);
+    cardInnerContainer.appendChild(cardPagesElement);
     cardPagesElement.innerText = "Pages: " + myLibrary[myLibrary.length-1].pages;
 
-    const cardReadElement = document.createElement("p");
-    cardReadElement.classList.add('card-read');
-    cardElement.appendChild(cardReadElement);
-    cardReadElement.innerText = "Read: " + myLibrary[myLibrary.length-1].readStatus;
+    const cardInnerContainerTwo = document.createElement("div")
+    cardInnerContainerTwo.classList.add('card-inner-two');
+    cardElement.appendChild(cardInnerContainerTwo);
 
-    let cardId = idNum;
-    const deleteElement = document.createElement("div");
-    deleteElement.classList.add('del-button')
-    deleteElement.setAttribute(`id`, `Card${cardId}`)
-    idNum +=1;
-    cardElement.appendChild(deleteElement);
-    deleteElement.addEventListener("click" , () => {
-        myLibrary.splice(cardId, 1);
-        deleteElement.parentElement.remove();
+    const cardReadElement = document.createElement("button");
+    cardReadElement.classList.add('card-read');
+    cardInnerContainerTwo.appendChild(cardReadElement);
+    cardReadElement.addEventListener("click", () =>{
+        if (myLibrary[myLibrary.length-1].readStatus == true){
+            cardReadElement.style.backgroundColor = "red";
+            cardReadElement.innerText = "Not Read";
+            this.readStatus = false;
+        } 
+        if (myLibrary[myLibrary.length-1].readStatus == false){
+            cardReadElement.style.backgroundColor = "rgb(0, 182, 0)";
+            cardReadElement.innerText = "Read";
+            this.readStatus = true;
+        }
     })
     
+    if (myLibrary[myLibrary.length-1].readStatus == true){          //Sets read div to read or not read based on form.
+        cardReadElement.style.backgroundColor = "rgb(0, 182, 0)";
+        cardReadElement.innerText = "Read";
+    } else{
+        cardReadElement.style.backgroundColor = "red";
+        cardReadElement.innerText = "Not Read";
+    }
+
+    let cardId = idNum;                                            
+    const deleteElement = document.createElement("button");
+    deleteElement.classList.add('del-button')
+    deleteElement.innerText = "Remove";
+    deleteElement.setAttribute(`id`, `Card${cardId}`)
+    idNum +=1;
+    cardInnerContainerTwo.appendChild(deleteElement);
+    deleteElement.addEventListener("click" , () => {
+        myLibrary.splice(cardId, 1);
+        cardInnerContainerTwo.parentElement.remove();
+    })
 }
+
 
 
 const addBookButton = document.querySelector(".add-book");
@@ -80,7 +116,9 @@ formSubmit.addEventListener('submit', (e) =>{
     const readData = formSubmit.elements['read-status'].checked;
     const book = new Book(titleData, authorData, pagesData, readData); 
     myLibrary.push(book);  
-    log(myLibrary);
+    book.toggleRead();
     bookCard();
+    const form = document.querySelector(".form");
+    form.style.display = "none";
 })
 

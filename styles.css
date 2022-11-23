@@ -39,6 +39,7 @@ body{
 .card{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     border: 2px black solid;
     background-color: rgb(164, 67, 255);
     border-left: 15px rgb(0, 0, 0) solid;
@@ -54,12 +55,8 @@ body{
     box-shadow: 5px 5px rgb(65, 65, 65);
 }
 
-.card:nth-child(odd){
-    background-color: rgb(143, 28, 250);
-}
-
 .card > p{
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .top-bar{
@@ -143,19 +140,16 @@ div > input {
 }
 
 .del-button{
-    width: 40px;
-    height: 40px;
-    position: relative;
-    right: -10px;
-    bottom: -30px;
-    background-color: rgba(141, 141, 0, 0);
-    background-image: url('cross.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    align-self: flex-end;
-    justify-self: flex-end;
-    image-rendering: crisp-edges;
+    width: 230px;
+    height: 30px;
+    background-color: beige;
+    border: 2px black solid;
+    outline: none;
+    border-radius: 20px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .del-button:active{
@@ -164,4 +158,35 @@ div > input {
 
 .del-button:hover{
     transform:scale(1.2, 1.2);
+}
+
+.card-read{
+    width: 230px;
+    height: 30px;
+    background-color: beige;
+    border: 2px black solid;
+    outline: none;
+    border-radius: 20px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.card-read:active{
+    transform: scale(0.7, 0.7);
+}
+
+.card-read:hover{
+    transform:scale(1.2, 1.2);
+}
+
+.card-inner-one{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-inner-two{
+    display: flex;
+    flex-direction: column;
 }

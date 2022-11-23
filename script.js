@@ -33,28 +33,28 @@ Book.prototype.toggleRead = function(){                 //Attempt to use prototy
 
 const cardContainer = document.querySelector(".card-container");    //Queries the div that contains all the cards
 const card = document.querySelector(".card");                       
-let idNum = 0;
+let idNum = 0;          //For use with the delete button, ID's every remove button within a card
 
 function bookCard(){
-    const cardElement = document.createElement("div")
+    const cardElement = document.createElement("div")       //Creates initial card
     cardElement.classList.add('card');
     cardContainer.appendChild(cardElement);
 
-    const cardInnerContainer = document.createElement("div")
-    cardInnerContainer.classList.add('card-inner-one');
+    const cardInnerContainer = document.createElement("div")    //Two containers within to help with flexbox spacing
+    cardInnerContainer.classList.add('card-inner-one');         
     cardElement.appendChild(cardInnerContainer);
 
-    const cardTitleElement = document.createElement("h1");
+    const cardTitleElement = document.createElement("h1");      //Book Title Element 
     cardTitleElement.classList.add('card-title');
     cardInnerContainer.appendChild(cardTitleElement);
     cardTitleElement.innerText = myLibrary[myLibrary.length-1].title;       //Referencing index: OF LENGTH -1
 
-    const cardAuthorElement = document.createElement("p");
+    const cardAuthorElement = document.createElement("p");      //Book Author Element 
     cardAuthorElement.classList.add('card-author');
     cardInnerContainer.appendChild(cardAuthorElement);
     cardAuthorElement.innerText = "Written by: " + myLibrary[myLibrary.length-1].author;
 
-    const cardPagesElement = document.createElement("p");
+    const cardPagesElement = document.createElement("p");       //Book Pages Element
     cardPagesElement.classList.add('card-pages');
     cardInnerContainer.appendChild(cardPagesElement);
     cardPagesElement.innerText = "Pages: " + myLibrary[myLibrary.length-1].pages;
@@ -63,16 +63,15 @@ function bookCard(){
     cardInnerContainerTwo.classList.add('card-inner-two');
     cardElement.appendChild(cardInnerContainerTwo);
 
-    const cardReadElement = document.createElement("button");
+    const cardReadElement = document.createElement("button");       //Read element responds based on form toggle (true/false)
     cardReadElement.classList.add('card-read');
     cardInnerContainerTwo.appendChild(cardReadElement);
-    cardReadElement.addEventListener("click", () =>{
-        if (myLibrary[myLibrary.length-1].readStatus == true){
-            cardReadElement.style.backgroundColor = "red";
+    cardReadElement.addEventListener("click", () =>{                //CURRENT PROBLEM
+        if (this.readStatus == true){      
+            cardReadElement.style.backgroundColor = "Red";
             cardReadElement.innerText = "Not Read";
             this.readStatus = false;
-        } 
-        if (myLibrary[myLibrary.length-1].readStatus == false){
+        } else {
             cardReadElement.style.backgroundColor = "rgb(0, 182, 0)";
             cardReadElement.innerText = "Read";
             this.readStatus = true;
@@ -88,8 +87,8 @@ function bookCard(){
     }
 
     let cardId = idNum;                                            
-    const deleteElement = document.createElement("button");
-    deleteElement.classList.add('del-button')
+    const deleteElement = document.createElement("button");         //Delete book code, ID's it to be able to pull 
+    deleteElement.classList.add('del-button')                       //proper entry from array and remove card
     deleteElement.innerText = "Remove";
     deleteElement.setAttribute(`id`, `Card${cardId}`)
     idNum +=1;
@@ -101,7 +100,6 @@ function bookCard(){
 }
 
 
-
 const addBookButton = document.querySelector(".add-book");
 addBookButton.addEventListener("click", () => {
     addBookToLibrary();
@@ -109,16 +107,15 @@ addBookButton.addEventListener("click", () => {
 
 const formSubmit = document.querySelector(".form");
 formSubmit.addEventListener('submit', (e) =>{
-    e.preventDefault();
-    const titleData = formSubmit.elements['title'].value;
+    e.preventDefault();     //Prevents default submit for the form.
+    const titleData = formSubmit.elements['title'].value;       //Adds the form value to the variable to be used in constructor
     const authorData = formSubmit.elements['author'].value;
     const pagesData = formSubmit.elements['pages'].value;
     const readData = formSubmit.elements['read-status'].checked;
-    const book = new Book(titleData, authorData, pagesData, readData); 
-    myLibrary.push(book);  
-    book.toggleRead();
-    bookCard();
+    const book = new Book(titleData, authorData, pagesData, readData);  //Creates the new book object
+    myLibrary.push(book);   //Adds book to the myLibrary array generated at start
+    bookCard();             //Creates the book card with the form data
     const form = document.querySelector(".form");
-    form.style.display = "none";
+    form.style.display = "none";            //Sets display to 'none' to 'close' the form after submit
 })
 
